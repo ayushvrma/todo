@@ -30,10 +30,15 @@ def delete(id):
 
 @app.route('/update/<int:id>', methods=['GET','POST'])
 def update(id):
-    if db.execute("SELECT * FROM todo WHERE id=:id",{"id":id}).rowcout == 0:
+    if db.execute("SELECT * FROM todo WHERE id=:id",{"id":id}).rowcount == 0:
         return render_template(error.html, message="no task as such exists")
     ntask=request.form.get("ntask")
     nd=datetime.date.today()
     db.execute("UPDATE todo SET task=:task, date=:date WHERE id=:id",{"task":ntask,"id":id,"date":nd})
     db.commit()
     return render_template("update.html")
+
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run()
