@@ -28,7 +28,7 @@ def delete(id):
     db.commit()
     return redirect("/")
 
-@app.route('/update', methods=['GET','POST'])
+@app.route('/update/<int:id>', methods=['GET','POST'])
 def update(id):
     if db.execute("SELECT * FROM todo WHERE id=:id",{"id":id}).rowcount == 0:
         return render_template(error.html, message="no task as such exists")
@@ -40,6 +40,7 @@ def update(id):
     return render_template("update.html")
 
 
-""" if __name__ == '__main__':
+if __name__ == '__main__':
+
     app.debug = True
-    app.run() """
+    app.run()
